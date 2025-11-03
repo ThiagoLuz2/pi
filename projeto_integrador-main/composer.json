@@ -1,0 +1,9 @@
+{
+    "name": "slim/slim",
+    "autoload": {
+        "psr-4": {
+            "Slim\\Slim\\": "src/"
+        }
+    },
+    "require": {}
+}

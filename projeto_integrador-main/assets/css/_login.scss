@@ -1,0 +1,335 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f7f9fa;
+  color: #333;
+}
+
+
+.navbar21 {
+  background-color: #023047;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+h2 {
+  color: #FB8500;
+  text-align: center;
+  padding: 40px;
+  font-size: 45px;
+}
+
+p {
+  color: #023047;
+  text-align: center;
+  font-size: 20px;
+}
+
+.logo-area21 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.home-icon21 {
+  font-size: 1.2rem;
+}
+
+.logo21 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: white;
+}
+
+.menu24 .bntmenu21{
+  background-color: #FB8500;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.menu24 .bntmenu22{
+  background-color: white;
+  color: #FB8500;
+  padding: 12px 24px;
+  border: 2px solid #FB8500;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.menu24 .bntmenu22 a{
+  text-decoration: none;
+  color: #FB8500;
+}
+
+.main21 {
+  max-width: 600px;
+  margin: 50px auto;
+  text-align: center;
+  padding: 20px;
+}
+
+.highlight21 {
+  color: #fb8500;
+  font-weight: bold;
+}
+
+.tabs21 {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+  gap: 20px;
+}
+
+.tab21 {
+  background-color: #e0e0e0;
+  border: none;
+  padding: 10px 30px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.tab21.active {
+  background-color: #ffb703;
+  color: white;
+  font-weight: bold;
+}
+
+
+.form-wrapper21 {
+  margin: 0;
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  align-items: center;     
+}
+
+.form21 {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  animation: fadein21 0.4s ease-in-out;
+}
+
+@keyframes fadein21 {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hidden21 {
+  display: none;
+}
+
+.form21 input {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 700px;
+}
+
+.form21 label {
+  color: #023047;
+  text-align: left;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.forgot21 {
+  float: right;
+  font-size: 0.9rem;
+  text-decoration: none;
+  color: #219EBC;
+}
+
+.btn-primary21 {
+  background-color: #fb8500;
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+  
+}
+
+.btn-primary21:hover {
+  background-color: #ff9e00;
+}
+
+
+.divider21 {
+  margin: 15px 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #888;
+  position: relative;
+}
+
+.divider21::before,
+.divider21::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 40%;
+  height: 1px;
+  background-color: #ddd;
+}
+
+.divider21::before {
+  left: 0;
+}
+
+.divider21::after {
+  right: 0;
+}
+
+.social-login21 {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+}
+
+.google21,
+.facebook21 {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.3s;
+}
+
+.google21 {
+  background-color: #DB4437;
+}
+
+.facebook21 {
+  background-color: #3b5998;
+}
+
+.google21:hover,
+.facebook21:hover {
+  opacity: 0.85;
+}
+
+
+.footer21 {
+  background-color: #023047;
+  color: white;
+  padding: 50px 40px;
+  margin-top: 80px;
+}
+
+.cta21 {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.cta21 h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+.cta21 p {
+  font-size: 1rem;
+  color: #ddd;
+  
+}
+
+.letra p {
+  color: white;
+}
+
+.cta-buttons21 {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.btn-secondary21 {
+  background: transparent;
+  border: 2px solid white;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary21:hover {
+  background: white;
+  color: #023047;
+}
+
+.footer-links21 {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px;
+  justify-content: space-between;
+  margin-top: 30px;
+}
+
+.col21 {
+  flex: 1 1 200px;
+}
+
+.col21 h4 {
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+}
+
+.col21 ul {
+  list-style: none;
+  padding: 0;
+}
+
+.col21 ul li {
+  margin-bottom: 8px;
+}
+
+.col21 ul li a {
+  color: #ddd;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.3s;
+}
+
+.col21 ul li a:hover {
+  color: #ffb703;
+}
+
+.col21 p {
+  font-size: 0.9rem;
+  line-height: 1.4;
+  
+}
