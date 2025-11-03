@@ -1,4 +1,8 @@
 <?php
+echo "hello word";
+?>
+
+<?php
 
 session_start();
 require 'banco/config.php';
