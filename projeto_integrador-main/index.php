@@ -8,7 +8,7 @@ session_start();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NaHoraDoCheckIn2</title>
+    <title>NaHoraDoCheckIn</title>
     <link rel="stylesheet" href="assets/css/styles.css">
     <link rel="stylesheet" href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
@@ -154,8 +154,8 @@ session_start();
           <img src="https://www.melhoresdestinos.com.br/wp-content/uploads/2023/07/hotel-fazenda-santa-catarina-capa.jpg" alt="Imagem 2">
           <div class="overlay">
             <h3>Hotel fazenda</h3>
-            
-            <button>Saiba mais</button>
+
+            <button><a href="hoteis_tipo/fazenda.php">Saiba mais</a></button>
           </div>
         </div>
         <div class="item">
