@@ -1,19 +1,16 @@
 <?php
-include_once '../config/database.php';
-include_once '../classes/Favorito.php';
-include_once '../includes/header.php';
 
 $database = new Database();
 $db = $database->getConnection();
 $favorito = new Favorito($db);
 
-// Buscar todos os hotéis
+
 $query = "SELECT * FROM hoteis ORDER BY nome";
 $stmt = $db->prepare($query);
 $stmt->execute();
 $hoteis = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Contar favoritos do usuário
+
 $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
 ?>
 
@@ -27,7 +24,7 @@ $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
+        
         <div class="header">
             <div class="user-info">
                 <span>Olá, <?php echo $_SESSION['usuario_nome']; ?>!</span>
@@ -39,7 +36,7 @@ $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
             <p>Encontre o lugar perfeito para sua próxima viagem</p>
         </div>
 
-        <!-- Mensagens -->
+        
         <?php if(isset($_SESSION['mensagem'])): ?>
             <div class="mensagem <?php echo $_SESSION['tipo_mensagem']; ?>">
                 <?php 
@@ -50,7 +47,7 @@ $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
             </div>
         <?php endif; ?>
 
-        <!-- Grid de Hotéis -->
+        
         <div class="hotel-grid">
             <?php foreach($hoteis as $hotel): ?>
                 <?php
@@ -113,7 +110,7 @@ $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
     </div>
 
     <script>
-        // Efeitos interativos
+        
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.hotel-card');
             
@@ -127,7 +124,7 @@ $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
                 });
             });
 
-            // Animações de botão favorito
+            
             const favoritoButtons = document.querySelectorAll('.btn-favorito');
             favoritoButtons.forEach(btn => {
                 btn.addEventListener('click', function(e) {
