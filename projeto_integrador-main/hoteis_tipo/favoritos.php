@@ -1,7 +1,7 @@
 <?php
-include_once '../config/database.php';
-include_once '../classes/Favorito.php';
-include_once '../includes/header.php';
+include_once '../banco/config.php';
+include_once '../banco/Favoritos.php';
+include_once '../banco/header.php';
 
 $database = new Database();
 $db = $database->getConnection();
@@ -113,7 +113,7 @@ $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
     </div>
 
     <script>
-        // Efeitos interativos
+        
         document.addEventListener('DOMContentLoaded', function() {
             const cards = document.querySelectorAll('.hotel-card');
             
@@ -127,7 +127,7 @@ $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
                 });
             });
 
-            // Animações de botão favorito
+            
             const favoritoButtons = document.querySelectorAll('.btn-favorito');
             favoritoButtons.forEach(btn => {
                 btn.addEventListener('click', function(e) {

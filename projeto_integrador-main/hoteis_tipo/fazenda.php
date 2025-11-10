@@ -1,19 +1,19 @@
 <?php
-include_once '../config/database.php';
-include_once '../classes/Favorito.php';
-include_once '../includes/header.php';
+include_once '../banco/config.php';
+include_once '../hoteis_tipo/favoritos.php';
+include_once '../banco/header.php';
 
 $database = new Database();
 $db = $database->getConnection();
 $favorito = new Favorito($db);
 
-// Buscar todos os hotéis
+
 $query = "SELECT * FROM hoteis ORDER BY nome";
 $stmt = $db->prepare($query);
 $stmt->execute();
 $hoteis = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Contar favoritos do usuário
+
 $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
 ?>
 
@@ -300,13 +300,13 @@ $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
+    
         <div class="header">
-            <h1>🌾 Hotéis Fazenda Premium</h1>
+            <h1>NaHoraDoCheckIn - Hoteis Fazenda</h1>
             <p>Descubra os melhores hotéis fazenda para sua próxima escapada</p>
         </div>
 
-        <!-- Mensagens -->
+     
         <?php if(isset($_SESSION['mensagem'])): ?>
             <div class="mensagem <?php echo $_SESSION['tipo_mensagem']; ?>">
                 <?php 
@@ -317,7 +317,7 @@ $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
             </div>
         <?php endif; ?>
 
-        <!-- Grid de Hotéis -->
+        
         <div class="hotel-grid">
             <?php foreach($hoteis as $hotel): ?>
                 <?php
@@ -348,7 +348,7 @@ $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
                             <span class='material-symbols-outlined'>favorite</span>
                             Favoritar
                         </button>
-                        <a href='fazenda-paraiso-verde.html' class='btn btn-primary'>
+                        <a href='hoteis_informações/fazenda.php' class='btn btn-primary'>
                             <span class='material-symbols-outlined'>visibility</span>
                             Ver Hotel
                         </a>
@@ -356,7 +356,7 @@ $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
                 </div>
             </div>
 
-            <!-- Hotel 2: Sítio do Lago -->
+           
             <div class='hotel-card'>
                 <div class='carousel' id='carousel-2'>
                     <div class='carousel-inner'>
@@ -408,12 +408,12 @@ $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
                 </div>
             </div>
 
-            <!-- Adicione os outros hotéis seguindo o mesmo padrão -->
+          
         </div>
     </div>
 
     <script>
-        // Efeitos interativos
+       
         document.addEventListener('DOMContentLoaded', function() {
             setInterval(() => {
                 const carousels = document.querySelectorAll('.carousel');
@@ -427,7 +427,7 @@ $total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
                 });
             });
 
-            // Animações de botão favorito
+            
             const favoritoButtons = document.querySelectorAll('.btn-favorito');
             favoritoButtons.forEach(btn => {
                 btn.addEventListener('click', function(e) {
