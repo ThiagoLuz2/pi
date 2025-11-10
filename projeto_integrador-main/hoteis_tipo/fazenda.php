@@ -1,3 +1,22 @@
+<?php
+include_once '../config/database.php';
+include_once '../classes/Favorito.php';
+include_once '../includes/header.php';
+
+$database = new Database();
+$db = $database->getConnection();
+$favorito = new Favorito($db);
+
+// Buscar todos os hotéis
+$query = "SELECT * FROM hoteis ORDER BY nome";
+$stmt = $db->prepare($query);
+$stmt->execute();
+$hoteis = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+// Contar favoritos do usuário
+$total_favoritos = $favorito->contarFavoritos($_SESSION['usuario_id']);
+?>
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -281,39 +300,37 @@
 </head>
 <body>
     <div class="container">
+        <!-- Header -->
         <div class="header">
             <h1>🌾 Hotéis Fazenda Premium</h1>
             <p>Descubra os melhores hotéis fazenda para sua próxima escapada</p>
         </div>
 
-        <div class="hotels-grid">
-            <!-- Hotel 1: Fazenda Paraíso Verde -->
-            <div class='hotel-card'>
-                <div class='carousel' id='carousel-1'>
-                    <div class='carousel-inner'>
-                        <div class='carousel-item active'></div>
-                        <div class='carousel-item'></div>
-                        <div class='carousel-item'></div>
-                    </div>
-                    <div class='carousel-controls'>
-                        <button class='carousel-btn prev' onclick='prevSlide(1)'>
-                            <span class='material-symbols-outlined'>chevron_left</span>
-                        </button>
-                        <button class='carousel-btn next' onclick='nextSlide(1)'>
-                            <span class='material-symbols-outlined'>chevron_right</span>
-                        </button>
-                    </div>
-                    <div class='carousel-indicators'>
-                        <span class='indicator active' onclick='goToSlide(1, 0)'></span>
-                        <span class='indicator' onclick='goToSlide(1, 1)'></span>
-                        <span class='indicator' onclick='goToSlide(1, 2)'></span>
-                    </div>
-                </div>
-                <div class='hotel-content'>
-                    <div class='hotel-header'>
-                        <div>
-                            <h3 class='hotel-name'>Fazenda Paraíso Verde</h3>
-                            <div class='hotel-stars'>★★★★★</div>
+        <!-- Mensagens -->
+        <?php if(isset($_SESSION['mensagem'])): ?>
+            <div class="mensagem <?php echo $_SESSION['tipo_mensagem']; ?>">
+                <?php 
+                echo $_SESSION['mensagem']; 
+                unset($_SESSION['mensagem']);
+                unset($_SESSION['tipo_mensagem']);
+                ?>
+            </div>
+        <?php endif; ?>
+
+        <!-- Grid de Hotéis -->
+        <div class="hotel-grid">
+            <?php foreach($hoteis as $hotel): ?>
+                <?php
+                $favorito->usuario_id = $_SESSION['usuario_id'];
+                $favorito->hotel_id = $hotel['id'];
+                $is_favorito = $favorito->isFavorito();
+                ?>
+                
+                <div class="hotel-card">
+                    <div class="hotel-image" onclick="window.location.href='detalhes_hotel.php?id=<?php echo $hotel['id']; ?>'">
+                        <img src="<?php echo $hotel['imagem_url'] ?: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=400'; ?>" alt="<?php echo $hotel['nome']; ?>">
+                        <div class="hotel-overlay">
+                            <span class="ver-detalhes">Ver Detalhes</span>
                         </div>
                     </div>
                     
@@ -396,54 +413,7 @@
     </div>
 
     <script>
-        // Funções do Carrossel
-        function nextSlide(carouselId) {
-            const carousel = document.getElementById(`carousel-${carouselId}`);
-            const inner = carousel.querySelector('.carousel-inner');
-            const items = carousel.querySelectorAll('.carousel-item');
-            const indicators = carousel.querySelectorAll('.indicator');
-            
-            const activeIndex = Array.from(items).findIndex(item => item.classList.contains('active'));
-            const nextIndex = (activeIndex + 1) % items.length;
-            
-            updateCarousel(carouselId, nextIndex);
-        }
-
-        function prevSlide(carouselId) {
-            const carousel = document.getElementById(`carousel-${carouselId}`);
-            const inner = carousel.querySelector('.carousel-inner');
-            const items = carousel.querySelectorAll('.carousel-item');
-            const indicators = carousel.querySelectorAll('.indicator');
-            
-            const activeIndex = Array.from(items).findIndex(item => item.classList.contains('active'));
-            const prevIndex = (activeIndex - 1 + items.length) % items.length;
-            
-            updateCarousel(carouselId, prevIndex);
-        }
-
-        function goToSlide(carouselId, slideIndex) {
-            updateCarousel(carouselId, slideIndex);
-        }
-
-        function updateCarousel(carouselId, newIndex) {
-            const carousel = document.getElementById(`carousel-${carouselId}`);
-            const inner = carousel.querySelector('.carousel-inner');
-            const items = carousel.querySelectorAll('.carousel-item');
-            const indicators = carousel.querySelectorAll('.indicator');
-            
-            // Remove active class from all items and indicators
-            items.forEach(item => item.classList.remove('active'));
-            indicators.forEach(indicator => indicator.classList.remove('active'));
-            
-            // Add active class to new item and indicator
-            items[newIndex].classList.add('active');
-            indicators[newIndex].classList.add('active');
-            
-            // Move carousel
-            inner.style.transform = `translateX(-${newIndex * 100}%)`;
-        }
-
-        // Auto-rotate carousels
+        // Efeitos interativos
         document.addEventListener('DOMContentLoaded', function() {
             setInterval(() => {
                 const carousels = document.querySelectorAll('.carousel');
@@ -451,37 +421,22 @@
                     const carouselId = index + 1;
                     nextSlide(carouselId);
                 });
-            }, 5000); // Muda a cada 5 segundos
-        });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
 
-        // Função de favoritos (mantida do código anterior)
-        function toggleFavorite(button, hotelId) {
-            button.classList.toggle('active');
-            const icon = button.querySelector('.material-symbols-outlined');
-            
-            if (button.classList.contains('active')) {
-                let favorites = JSON.parse(localStorage.getItem('favorite_hotels')) || [];
-                if (!favorites.includes(hotelId)) {
-                    favorites.push(hotelId);
-                    localStorage.setItem('favorite_hotels', JSON.stringify(favorites));
-                }
-                console.log(`Hotel ${hotelId} favoritado!`);
-            } else {
-                let favorites = JSON.parse(localStorage.getItem('favorite_hotels')) || [];
-                favorites = favorites.filter(id => id !== hotelId);
-                localStorage.setItem('favorite_hotels', JSON.stringify(favorites));
-                console.log(`Hotel ${hotelId} removido dos favoritos!`);
-            }
-        }
-
-        // Carregar favoritos ao iniciar
-        document.addEventListener('DOMContentLoaded', function() {
-            const favorites = JSON.parse(localStorage.getItem('favorite_hotels')) || [1, 3];
-            favorites.forEach(hotelId => {
-                const buttons = document.querySelectorAll(`.btn-favorite`);
-                buttons.forEach(button => {
-                    if (button.onclick && button.onclick.toString().includes(`toggleFavorite(this, ${hotelId})`)) {
-                        button.classList.add('active');
+            // Animações de botão favorito
+            const favoritoButtons = document.querySelectorAll('.btn-favorito');
+            favoritoButtons.forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    if (this.classList.contains('favoritado')) {
+                        this.innerHTML = '🤍 Favoritar';
+                        this.classList.remove('favoritado');
+                    } else {
+                        this.innerHTML = '❤️ Favorito';
+                        this.classList.add('favoritado');
                     }
                 });
             });
