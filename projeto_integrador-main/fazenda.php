@@ -9,6 +9,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hotéis Fazenda - NaHoraDoCheckIn</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=home" />
     <style>
         :root {
             --azul-principal: #023047;
@@ -60,7 +61,7 @@
             gap: 10px;
         }
         
-        .logo i {
+        .logo span {
             font-size: 2rem;
             color: var(--laranja-principal);
         }
@@ -386,7 +387,7 @@
     <header>
         <div class="header-container">
             <div class="logo">
-                <i class="fas fa-tree"></i>
+                <span class="material-symbols-outlined">home</span>
                 <h1>NaHoraDoCheckIn</h1>
             </div>
             <nav>
@@ -430,7 +431,7 @@
                     <div class="hotel-price">R$ 420<span>/noite</span></div>
                     <div class="hotel-actions">
                         <button class="btn btn-primary">Ver Mais</button>
-                        <button class="btn btn-secondary">Reservar</button>
+                        <button class="btn btn-secondary">favoritar</button>
                     </div>
                 </div>
             </div>
@@ -455,7 +456,7 @@
                     <div class="hotel-price">R$ 380<span>/noite</span></div>
                     <div class="hotel-actions">
                         <button class="btn btn-primary">Ver Mais</button>
-                        <button class="btn btn-secondary">Reservar</button>
+                        <button class="btn btn-secondary">favoritar</button>
                     </div>
                 </div>
             </div>
@@ -480,7 +481,7 @@
                     <div class="hotel-price">R$ 320<span>/noite</span></div>
                     <div class="hotel-actions">
                         <button class="btn btn-primary">Ver Mais</button>
-                        <button class="btn btn-secondary">Reservar</button>
+                        <button class="btn btn-secondary">favoritar</button>
                     </div>
                 </div>
             </div>
@@ -505,7 +506,7 @@
                     <div class="hotel-price">R$ 450<span>/noite</span></div>
                     <div class="hotel-actions">
                         <button class="btn btn-primary">Ver Mais</button>
-                        <button class="btn btn-secondary">Reservar</button>
+                        <button class="btn btn-secondary">favoritar</button>
                     </div>
                 </div>
             </div>
@@ -530,7 +531,7 @@
                     <div class="hotel-price">R$ 290<span>/noite</span></div>
                     <div class="hotel-actions">
                         <button class="btn btn-primary">Ver Mais</button>
-                        <button class="btn btn-secondary">Reservar</button>
+                        <button class="btn btn-secondary">favoritar</button>
                     </div>
                 </div>
             </div>
@@ -555,7 +556,7 @@
                     <div class="hotel-price">R$ 350<span>/noite</span></div>
                     <div class="hotel-actions">
                         <button class="btn btn-primary">Ver Mais</button>
-                        <button class="btn btn-secondary">Reservar</button>
+                        <button class="btn btn-secondary">favoritar</button>
                     </div>
                 </div>
             </div>
@@ -580,16 +581,15 @@
                     <li><a href="#">Início</a></li>
                     <li><a href="#">Hotéis</a></li>
                     <li><a href="#">Destinos</a></li>
-                    <li><a href="#">Promoções</a></li>
-                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">sobre nós</a></li>
                 </ul>
             </div>
             <div class="footer-column">
                 <h3>Contato</h3>
                 <ul>
-                    <li><i class="fas fa-map-marker-alt"></i> Rua das Flores, 123 - São Paulo, SP</li>
-                    <li><i class="fas fa-phone"></i> (11) 3456-7890</li>
-                    <li><i class="fas fa-envelope"></i> contato@hoteisfazenda.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Senac, 730, Visconde de Taunay, Joinville, SC</li>
+                    <li><i class="fas fa-phone"></i> (47) 99706-2510</li>
+                    <li><i class="fas fa-envelope"></i>contato@nahoradocheckin.com</li>
                 </ul>
             </div>
             <div class="footer-column">
@@ -602,7 +602,7 @@
             </div>
         </div>
         <div class="copyright">
-            <p>&copy; 2023 Hotéis Fazenda. Todos os direitos reservados.</p>
+            <p>&copy; 2023 NaHoraDoCheckIn. Todos os direitos reservados.</p>
         </div>
     </footer>
 
