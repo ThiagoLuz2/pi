@@ -201,7 +201,7 @@ const hotels = [
         lng: -49.2715,
         image: "https://irp.cdn-website.com/da7e3151/dms3rep/multi/29.jpg"
       },
-    // Hotéis em Florianópolis
+    
     {
       name: "Pousada do Santinho",
       price: 180,
@@ -234,34 +234,41 @@ const hotels = [
   };
   
   function renderHotels(hotelsToShow) {
-    const container = document.getElementById("hotelList");
-    container.innerHTML = "";
-  
-    clearMap();
-  
-    hotelsToShow.forEach(hotel => {
-      const card = document.createElement("div");
-      card.className = "hotel-card0";
-  
-      card.innerHTML = `
-        <img class="hotel-image0" src="${hotel.image}" alt="${hotel.name}">
-        <div class="hotel-info0">
-          <h2>${hotel.name}</h2>
-          <p>${hotel.location}</p>
-          <p><strong>R$ ${hotel.price}</strong> - ${hotel.stars}★ - ${hotel.type}</p>
-          <p>${hotel.distancia ? `Distância: ${hotel.distancia.toFixed(2)} km` : ""}</p>
-          <button><a href="hoteis_informações/hotel1.php">Ver oferta</a></button>
-        </div>
-      `;
-  
-      container.appendChild(card);
-  
-      const marker = L.marker([hotel.lat, hotel.lng])
-        .addTo(map)
-        .bindPopup(`<strong>${hotel.name}</strong><br>R$ ${hotel.price}`);
-      markers.push(marker);
-    });
-  }
+  const container = document.getElementById("hotelList");
+  container.innerHTML = "";
+
+  clearMap();
+
+  hotelsToShow.forEach(hotel => {
+    const card = document.createElement("div");
+    card.className = "hotel-card0";
+
+    // cria URL com parâmetros únicos do hotel
+    const link = 'hoteis_informações/hotel.php?name=' + encodeURIComponent(hotel.name)
+      + '&price=' + encodeURIComponent(hotel.price)
+      + '&image=' + encodeURIComponent(hotel.image)
+      + '&stars=' + encodeURIComponent(hotel.stars)
+      + '&location=' + encodeURIComponent(hotel.location);
+
+    card.innerHTML = `
+      <img class="hotel-image0" src="${hotel.image}" alt="${hotel.name}">
+      <div class="hotel-info0">
+        <h2>${hotel.name}</h2>
+        <p>${hotel.location}</p>
+        <p><strong>R$ ${hotel.price}</strong> - ${hotel.stars}★ - ${hotel.type}</p>
+        <p>${hotel.distancia ? `Distância: ${hotel.distancia.toFixed(2)} km` : ""}</p>
+        <button><a href="${link}">Ver oferta</a></button>
+      </div>
+    `;
+
+    container.appendChild(card);
+
+    const marker = L.marker([hotel.lat, hotel.lng])
+      .addTo(map)
+      .bindPopup(`<strong>${hotel.name}</strong><br>R$ ${hotel.price}`);
+    markers.push(marker);
+  });
+}
   
   function clearMap() {
     markers.forEach(marker => map.removeLayer(marker));
@@ -294,7 +301,7 @@ const hotels = [
   
     if (city !== "all") {
       filtered = filtered.filter(h => h.location === city);
-      updateMapForCity(city);  // Atualiza a posição do mapa para a cidade filtrada
+      updateMapForCity(city);  
     }
   
     renderHotels(filtered);
@@ -304,7 +311,7 @@ const hotels = [
     const cityCoords = citiesCoordinates[city];
     
     if (cityCoords) {
-      map.setView(cityCoords, 13);  // Ajusta a visão do mapa para a cidade
+      map.setView(cityCoords, 13);  
     }
   }
   
@@ -361,4 +368,3 @@ const hotels = [
   }
   
   window.onload = initMap;
-  

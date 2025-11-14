@@ -1,3 +1,4 @@
+
 <?php
 session_start();
 ?>
@@ -155,7 +156,7 @@ session_start();
           <div class="overlay">
             <h3>Hotel fazenda</h3>
             
-            <button>Saiba mais</button>
+            <button><a href="fazenda.php">Saiba mais</a></button>
           </div>
         </div>
         <div class="item">
