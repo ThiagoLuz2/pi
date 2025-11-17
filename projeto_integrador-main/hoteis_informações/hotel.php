@@ -1,10 +1,94 @@
 <?php
-
+session_start();
 $name = isset($_GET['name']) ? htmlspecialchars(urldecode($_GET['name'])) : 'Nome não informado';
 $price = isset($_GET['price']) ? htmlspecialchars(urldecode($_GET['price'])) : '---';
 $image = isset($_GET['image']) ? htmlspecialchars(urldecode($_GET['image'])) : '';
 $stars = isset($_GET['stars']) ? htmlspecialchars(urldecode($_GET['stars'])) : '';
 $location = isset($_GET['location']) ? htmlspecialchars(urldecode($_GET['location'])) : '';
+
+
+include_once __DIR__ . '/../banco/config.php';
+
+$feedbacks = [];
+$feedback_error = '';
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_feedback'])) {
+    if (empty($_SESSION['usuario_id'])) {
+        $feedback_error = 'Você precisa estar logado para enviar uma avaliação.';
+    } else {
+        $usuario_id = (int) $_SESSION['usuario_id'];
+        $nota = isset($_POST['nota']) ? (int) $_POST['nota'] : 0;
+        $comentario = trim($_POST['comentario'] ?? '');
+
+        if ($nota < 1 || $nota > 5) {
+            $feedback_error = 'Nota inválida.';
+        } elseif (mb_strlen($comentario) > 2000) {
+            $feedback_error = 'Comentário muito longo.';
+        } else {
+            try {
+                $stmtIns = $pdo->prepare("INSERT INTO feedback (nome_hotel, nota, autor, data_do_comentario, comentario) VALUES (:hotel, :nota, :autor, NOW(), :comentario)");
+                $stmtIns->execute([
+                    ':hotel' => $name,
+                    ':nota' => $nota,
+                    ':autor' => $usuario_id,
+                    ':comentario' => $comentario
+                ]);
+                
+                header('Location: ' . $_SERVER['REQUEST_URI']);
+                exit;
+            } catch (Exception $e) {
+                $feedback_error = 'Erro ao salvar avaliação: ' . $e->getMessage();
+            }
+        }
+    }
+}
+
+
+if (!empty($name)) {
+    try {
+        $sql = "
+            SELECT 
+                f.nota AS rating,
+                f.autor AS author_id,
+                f.data_do_comentario AS data_do_comentario,
+                f.comentario AS comment,
+                COALESCE(u.nome_usuario, '') AS author_name
+            FROM feedback f
+            LEFT JOIN usuario u ON f.autor = u.id_usario
+            WHERE f.nome_hotel = :hotel
+            ORDER BY f.data_do_comentario DESC
+        ";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([':hotel' => $name]);
+        $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($rows) {
+            foreach ($rows as $r) {
+                $date = '';
+                if (!empty($r['data_do_comentario'])) {
+                    $ts = strtotime($r['data_do_comentario']);
+                    $date = ($ts !== false) ? date('d/m/y', $ts) : $r['data_do_comentario'];
+                }
+                $feedbacks[] = [
+                    'rating'  => isset($r['rating']) ? (int)$r['rating'] : 0,
+                    'author'  => !empty($r['author_name']) ? $r['author_name'] : 'Anônimo',
+                    'date'    => $date,
+                    'comment' => $r['comment'] ?? ''
+                ];
+            }
+        }
+    } catch (Exception $e) {
+        error_log($e->getMessage());
+    }
+}
+
+
+if (empty($feedbacks) && isset($_GET['feedback'])) {
+    $decoded = json_decode(urldecode($_GET['feedback']), true);
+    if (is_array($decoded)) {
+        $feedbacks = $decoded;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -12,17 +96,18 @@ $location = isset($_GET['location']) ? htmlspecialchars(urldecode($_GET['locatio
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title><?= $name ?> - NaHoraDoCheckIn</title>
-  <link rel="stylesheet" href="../assets/css/styles.css" />
   <style>
-    /* Estilos baseados na imagem fornecida */
+    
     :root {
-      --primary-color: #2c3e50;
-      --secondary-color: #3498db;
-      --accent-color: #fb8500;
-      --light-bg: #ffffffff;
-      --dark-text: #2c3e50;
-      --light-text: #7f8c8d;
-      --border-color: #dce4e8;
+     --azul-principal: #023047;
+            --azul-secundario: #023047;
+            --azul-medio: #126782;
+            --azul-claro: #dbeafe;
+            --laranja-principal: #f97316;
+            --laranja-secundario: #fdba74;
+            --branco: #ffffff;
+            --cinza-claro: #f8fafc;
+            --cinza-escuro: #334155;
       --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
     
@@ -34,17 +119,17 @@ $location = isset($_GET['location']) ? htmlspecialchars(urldecode($_GET['locatio
     }
     
     body {
-      background-color: var(--light-bg);
+      background-color: var(--branco   );
       color: var(--dark-text);
       line-height: 1.6;
     }
     
-    /* Header */
+    
     header {
       background-color: white;
       padding: 1rem 2rem;
       box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-      border-bottom: 1px solid var(--border-color);
+      border-bottom: 1px solid var(--azul-principal);
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -79,7 +164,7 @@ $location = isset($_GET['location']) ? htmlspecialchars(urldecode($_GET['locatio
       margin-right: 8px;
     }
     
-    /* Conteúdo principal */
+   
     .hotel-detail {
       max-width: 1200px;
       margin: 2rem auto;
@@ -174,7 +259,7 @@ $location = isset($_GET['location']) ? htmlspecialchars(urldecode($_GET['locatio
       margin-right: 8px;
     }
     
-    /* Botão de reserva */
+   
     .reservation-section {
       text-align: center;
       margin-top: 2rem;
@@ -210,7 +295,7 @@ $location = isset($_GET['location']) ? htmlspecialchars(urldecode($_GET['locatio
       transform: translateY(1px);
     }
     
-    /* Seção de serviços */
+    
     .services-section {
       margin-top: 2rem;
       padding: 1.5rem;
@@ -244,7 +329,7 @@ $location = isset($_GET['location']) ? htmlspecialchars(urldecode($_GET['locatio
       color: var(--secondary-color);
     }
     
-    /* Avaliações */
+   
     .reviews-section {
       margin-top: 2rem;
       padding: 1.5rem;
@@ -285,7 +370,61 @@ $location = isset($_GET['location']) ? htmlspecialchars(urldecode($_GET['locatio
       font-size: 0.9rem;
     }
     
-    /* Responsividade */
+  
+    .error-message {
+      color: #e74c3c;
+      background: #f9d6d5;
+      border: 1px solid #e74c3c;
+      padding: 0.75rem;
+      border-radius: 4px;
+      margin-bottom: 1.5rem;
+    }
+    
+    
+    .feedback-form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    
+    .feedback-form label {
+      font-weight: 600;
+      color: var(--dark-text);
+    }
+    
+    .feedback-form select,
+    .feedback-form textarea {
+      padding: 0.75rem;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+    }
+    
+    .feedback-form select:focus,
+    .feedback-form textarea:focus {
+      border-color: var(--accent-color);
+      outline: none;
+    }
+    
+    .feedback-form button {
+      background-color: var(--accent-color);
+      color: white;
+      padding: 0.75rem;
+      font-size: 1.1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    
+    .feedback-form button:hover {
+      background-color: #f97316;
+    }
+    
+   
     @media (max-width: 768px) {
       .hotel-header {
         flex-direction: column;
@@ -306,7 +445,7 @@ $location = isset($_GET['location']) ? htmlspecialchars(urldecode($_GET['locatio
       }
     }
     
-    /* Animações */
+    
     @keyframes fadeInUp {
       from {
         opacity: 0;
@@ -407,22 +546,53 @@ $location = isset($_GET['location']) ? htmlspecialchars(urldecode($_GET['locatio
     
     <div class="reviews-section">
       <h2 class="reviews-title">Avaliações dos Hóspedes</h2>
-      <div class="review-item">
-        <div class="review-header">
-          <span class="review-author">Maria Silva</span>
-          <span class="review-date">15/03/2023</span>
-        </div>
-        <div class="stars">★★★★★</div>
-        <p>Hotel excelente! Localização perfeita e atendimento impecável. Recomendo!</p>
-      </div>
-      <div class="review-item">
-        <div class="review-header">
-          <span class="review-author">João Santos</span>
-          <span class="review-date">10/03/2023</span>
-        </div>
-        <div class="stars">★★★★☆</div>
-        <p>Ótima estadia. Quarto confortável e café da manhã variado.</p>
-      </div>
+
+      <?php if (!empty($feedback_error)): ?>
+        <div class="error-message"><?= htmlspecialchars($feedback_error) ?></div>
+      <?php endif; ?>
+
+      <?php if (!empty($feedbacks)): ?>
+        <?php foreach ($feedbacks as $fb): 
+          $nota = isset($fb['nota']) ? intval($fb['nota']) : 0;
+          $autor = isset($fb['autor']) ? htmlspecialchars($fb['autor']) : 'Anônimo';
+          $date = isset($fb['date']) ? htmlspecialchars($fb['date']) : '';
+          $comentario = isset($fb['comentario']) ? htmlspecialchars($fb['comentario']) : '';
+          $starsStr = str_repeat('★', $nota) . str_repeat('☆', max(0, 5-$nota));
+        ?>
+          <div class="review-item">
+            <div class="review-header">
+              <span class="review-autor"><?= $autor ?></span>
+              <span class="review-date"><?= $date ?></span>
+            </div>
+            <div class="stars"><?= $starsStr ?></div>
+            <p><?= $comentario ?></p>
+          </div>
+        <?php endforeach; ?>
+      <?php else: ?>
+        <p>Nenhuma avaliação ainda.</p>
+      <?php endif; ?>
+
+      <hr />
+
+      <?php if (!empty($_SESSION['usuario_id'])): ?>
+        <form method="POST" class="feedback-form">
+          <label for="nota">Nota</label>
+          <select name="nota" id="nota" required>
+            <option value="">--</option>
+            <?php for ($i=5;$i>=1;$i--): ?>
+              <option value="<?= $i ?>"><?= $i ?> estrela<?= $i>1 ? 's' : '' ?></option>
+            <?php endfor; ?>
+          </select>
+
+          <label for="comentario">Comentário</label>
+          <textarea name="comentario" id="comentario" rows="4" maxlength="2000" required></textarea>
+
+          <button type="submit" name="submit_feedback">Enviar Avaliação</button>
+        </form>
+      <?php else: ?>
+        <p>Faça <a href="/login.php">login</a> ou <a href="/cadastro.php">cadastre-se</a> para enviar uma avaliação.</p>
+      <?php endif; ?>
+
     </div>
     
     <div class="reservation-section">

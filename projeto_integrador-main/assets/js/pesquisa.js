@@ -228,10 +228,16 @@ const hotels = [
   let markers = [];
   
   const citiesCoordinates = {
-    "Joinville": [-26.304, -48.848],
-    "Curitiba": [-25.4294, -49.2719],
-    "Florianópolis": [-27.4425, -48.4515]
-  };
+  "Joinville": [-26.304, -48.848],
+  "Curitiba": [-25.4294, -49.2719],
+  "Florianópolis": [-27.4425, -48.4515]
+};
+
+
+const sampleFeedback = [
+  { rating: 5, author: "Maria Silva", date: "15/03/23", comment: "Excelente! Localização e atendimento impecáveis." },
+  { rating: 4, author: "João Santos", date: "10/03/23", comment: "Boa estadia, quarto confortável e café variado." }
+  ];
   
   function renderHotels(hotelsToShow) {
   const container = document.getElementById("hotelList");
@@ -243,13 +249,13 @@ const hotels = [
     const card = document.createElement("div");
     card.className = "hotel-card0";
 
-    // cria URL com parâmetros únicos do hotel
+  
     const link = 'hoteis_informações/hotel.php?name=' + encodeURIComponent(hotel.name)
       + '&price=' + encodeURIComponent(hotel.price)
       + '&image=' + encodeURIComponent(hotel.image)
       + '&stars=' + encodeURIComponent(hotel.stars)
-      + '&location=' + encodeURIComponent(hotel.location);
-
+      + '&location=' + encodeURIComponent(hotel.location)
+      + '&feedback=' + encodeURIComponent(JSON.stringify(hotel.feedback || sampleFeedback));
     card.innerHTML = `
       <img class="hotel-image0" src="${hotel.image}" alt="${hotel.name}">
       <div class="hotel-info0">
@@ -366,5 +372,5 @@ const hotels = [
   
     renderHotels(hotels);
   }
-  
+
   window.onload = initMap;

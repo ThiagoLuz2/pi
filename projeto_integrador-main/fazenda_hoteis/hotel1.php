@@ -8,10 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fazenda Serenidade - Detalhes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=home" />
+
     <style>
         :root {
-            --azul-principal: #1e3a8a;
-            --azul-secundario: #3b82f6;
+            --azul-principal: #023047;
+            --azul-secundario: #023047;
+            --azul-medio: #126782;
             --azul-claro: #dbeafe;
             --laranja-principal: #f97316;
             --laranja-secundario: #fdba74;
@@ -58,7 +61,7 @@
             gap: 10px;
         }
         
-        .logo i {
+        .logo span {
             font-size: 2rem;
             color: var(--laranja-principal);
         }
@@ -84,7 +87,7 @@
             color: var(--laranja-secundario);
         }
         
-        /* Breadcrumb */
+        
         .breadcrumb {
             max-width: 1200px;
             margin: 1rem auto;
@@ -100,7 +103,7 @@
             text-decoration: underline;
         }
         
-        /* Hotel Details */
+        
         .hotel-details {
             max-width: 1200px;
             margin: 0 auto;
@@ -189,7 +192,7 @@
             background-color: var(--azul-claro);
         }
         
-        /* Carousel */
+        
         .carousel-container {
             position: relative;
             margin-bottom: 2rem;
@@ -263,7 +266,7 @@
             background-color: var(--branco);
         }
         
-        /* Hotel Info */
+        
         .hotel-info {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -446,7 +449,7 @@
             font-size: 0.9rem;
         }
         
-        /* Footer */
+        
         footer {
             background-color: var(--azul-principal);
             color: var(--branco);
@@ -513,7 +516,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        /* Responsividade */
+        
         @media (max-width: 768px) {
             .header-container {
                 flex-direction: column;
@@ -544,12 +547,12 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
+    
     <header>
         <div class="header-container">
             <div class="logo">
-                <i class="fas fa-tree"></i>
-                <h1>Hotéis Fazenda</h1>
+                <span class="material-symbols-outlined">home</span>
+                <h1>NaHoraDoCheckIn</h1>
             </div>
             <nav>
                 <ul>
@@ -563,19 +566,19 @@
         </div>
     </header>
 
-    <!-- Breadcrumb -->
+    
     <div class="breadcrumb">
-        <a href="#">Início</a> > <a href="#">Hotéis Fazenda</a> > <span>Fazenda Serenidade</span>
+        <a href="#">Início</a> > <a href="#">Hotéis Fazenda</a> > <span>Fazenda Dona francisca</span>
     </div>
 
-    <!-- Hotel Details -->
+    
     <main class="hotel-details">
         <div class="hotel-header">
             <div class="hotel-title">
-                <h1>Fazenda Serenidade</h1>
+                <h1>Hotel fazenda Dona francisca</h1>
                 <div class="hotel-location">
                     <i class="fas fa-map-marker-alt"></i>
-                    <span>Campos do Jordão, SP - A 15km do centro</span>
+                    <span>SC-418,- Km 19 - Pirabeiraba, Joinville - SC</span>
                 </div>
                 <div class="hotel-rating">
                     <i class="fas fa-star"></i>
@@ -583,7 +586,7 @@
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
                     <i class="fas fa-star"></i>
-                    <span>4.8 (342 avaliações)</span>
+                    <span>4.5 (5,4 mil avaliações)</span>
                 </div>
             </div>
             <div class="hotel-actions">
@@ -592,13 +595,13 @@
             </div>
         </div>
 
-        <!-- Carousel -->
+        
         <div class="carousel-container">
             <div class="carousel">
-                <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1564501049412-61c2a3083791?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1578683010236-d716f9a3f461?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1596394516093-9ba7f3f9c6bf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');"></div>
-                <div class="carousel-slide" style="background-image: url('https://images.unsplash.com/photo-1590073242678-70ee3fc28e8e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80');"></div>
+                <div class="carousel-slide" style="background-image: url('https://static.wixstatic.com/media/9653d9_e087082f8c294b089ca96680a20754ce~mv2.png/v1/fit/w_1440,h_797,q_90,enc_avif,quality_auto/9653d9_e087082f8c294b089ca96680a20754ce~mv2.png');"></div>
+                <div class="carousel-slide" style="background-image: url('https://static.wixstatic.com/media/9653d9_8a60ed17b659468b9048f20bcf4107bf~mv2.png/v1/fill/w_350,h_230,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/HDF%20%E2%80%A2%C2%A0site%20%E2%80%A2%2015.png');"></div>
+                <div class="carousel-slide" style="background-image: url('https://static.wixstatic.com/media/9653d9_ca78dc661182475ca1c95df6708c7d1a~mv2.png/v1/fill/w_350,h_230,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Ala%20Mirante%20com%20p%C3%B4r%20do%20sol.png');"></div>
+                <div class="carousel-slide" style="background-image: url('https://static.wixstatic.com/media/9653d9_192730544c2b46a380a667b0024e98db~mv2.png/v1/fill/w_280,h_280,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Master%20Mirante.png');"></div>
             </div>
             <button class="carousel-btn carousel-prev"><i class="fas fa-chevron-left"></i></button>
             <button class="carousel-btn carousel-next"><i class="fas fa-chevron-right"></i></button>
@@ -613,9 +616,9 @@
         <div class="hotel-info">
             <div class="hotel-description">
                 <h2 class="section-title">Sobre o Hotel</h2>
-                <p>Localizada no coração de Campos do Jordão, a Fazenda Serenidade oferece uma experiência única de imersão na natureza com todo o conforto e sofisticação. Nossa propriedade de 50 hectares é um refúgio perfeito para quem busca tranquilidade e reconexão com o ambiente rural.</p>
+                <p>Localizada na serra da Dona francisca, o hotel fazenda oferece uma experiência única de imersão na natureza com todo o conforto e sofisticação. A propriedade é um refúgio perfeito para quem busca tranquilidade e reconexão com o ambiente rural.</p>
                 
-                <p>Com arquitetura rústica e aconchegante, nossas acomodações foram cuidadosamente planejadas para proporcionar máximo conforto. Todas as suítes possuem lareira, varanda privativa com vista para as montanhas e banheira de hidromassagem.</p>
+                <p>Com arquitetura rústica e aconchegante, as acomodações foram cuidadosamente planejadas para proporcionar máximo conforto. Todas as suítes possuem lareira, varanda privativa com vista para as montanhas e banheira de hidromassagem.</p>
                 
                 <h2 class="section-title">Comodidades</h2>
                 <div class="amenities">
@@ -658,9 +661,8 @@
                     <li>Café da manhã colonial com produtos da fazenda</li>
                     <li>Trilhas ecológicas com guia especializado</li>
                     <li>Passeio a cavalo pela propriedade</li>
-                    <li>Visita à horta orgânica e pomar</li>
-                    <li>Noite de fondue (sexta e sábado)</li>
-                    <li>Atividades para crianças no kids club</li>
+                    <li>Arco e flecha para adultos e crianças</li>
+                    <li>Atividades para crianças no espaço kids</li>
                 </ul>
                 
                 <button class="btn btn-primary" style="margin-top: 2rem;">Mais Detalhes</button>
@@ -673,7 +675,7 @@
                             <div class="reviewer">
                                 <div class="reviewer-avatar">MC</div>
                                 <div>
-                                    <h4>Maria Clara</h4>
+                                    <h4>Davi Henrique</h4>
                                     <div class="hotel-rating">
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>
@@ -685,7 +687,7 @@
                             </div>
                             <div class="review-date">15 de Maio, 2023</div>
                         </div>
-                        <p>Experiência incrível! A Fazenda Serenidade superou todas as expectativas. As acomodações são impecáveis, a comida deliciosa e a equipe extremamente atenciosa. Voltaremos com certeza!</p>
+                        <p>Experiência incrível! A Fazenda Dona francisca superou todas as expectativas. As acomodações são impecáveis, a comida deliciosa e a equipe extremamente atenciosa. Voltaremos com certeza!</p>
                     </div>
                     
                     <div class="review-card">
@@ -693,7 +695,7 @@
                             <div class="reviewer">
                                 <div class="reviewer-avatar">RS</div>
                                 <div>
-                                    <h4>Roberto Silva</h4>
+                                    <h4>Thiago Soares da Luz</h4>
                                     <div class="hotel-rating">
                                         <i class="fas fa-star"></i>
                                         <i class="fas fa-star"></i>

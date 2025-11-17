@@ -20,7 +20,7 @@
             --laranja-secundario: #fdba74;
             --branco: #ffffff;
             --cinza-claro: #f8fafc;
-            --cinza-escuro: #334155;
+            --cinza-escuro: #334155; 
         }
         
         * {
@@ -293,6 +293,11 @@
         .btn-secondary:hover {
             background-color: var(--laranja-secundario);
         }
+
+        .bnt-primary a {
+            text-decoration: none;
+            color: var(--branco);
+        }
         
         
         footer {
@@ -416,10 +421,10 @@
                     <button class="favorite-btn"><i class="far fa-heart"></i></button>
                 </div>
                 <div class="hotel-info">
-                    <h3 class="hotel-name">Fazenda Serenidade</h3>
+                    <h3 class="hotel-name">Hotel fazenda Dona Francisca</h3>
                     <div class="hotel-location">
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>Campos do Jordão, SP</span>
+                        <span>Joinville, SC</span>
                     </div>
                     <div class="hotel-rating">
                         <i class="fas fa-star"></i>
@@ -428,9 +433,9 @@
                         <i class="fas fa-star"></i>
                         <i class="fas fa-star"></i>
                     </div>
-                    <div class="hotel-price">R$ 420<span>/noite</span></div>
+                    <div class="hotel-price">R$ 1179<span>/noite</span></div>
                     <div class="hotel-actions">
-                        <button class="btn btn-primary">Ver Mais</button>
+                        <button class="btn btn-primary"><a href="fazenda_hoteis/hotel1.php">saiba mais</a></button>
                         <button class="btn btn-secondary">favoritar</button>
                     </div>
                 </div>
@@ -622,12 +627,6 @@
             });
         });
 
-        document.querySelectorAll('.btn-primary').forEach(button => {
-            button.addEventListener('click', function() {
-                const hotelName = this.closest('.hotel-card').querySelector('.hotel-name').textContent;
-                alert(`Mais informações sobre ${hotelName} em breve!`);
-            });
-        });
 
         document.querySelectorAll('.btn-secondary').forEach(button => {
             button.addEventListener('click', function() {
